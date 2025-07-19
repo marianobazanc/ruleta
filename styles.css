@@ -1,0 +1,27 @@
+body {
+  font-family: sans-serif;
+  text-align: center;
+  background: #f4f4f4;
+}
+
+.container {
+  margin-top: 50px;
+}
+
+canvas {
+  border: 4px solid #333;
+  border-radius: 50%;
+  background-color: white;
+}
+
+button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 18px;
+}
+
+#result {
+  margin-top: 20px;
+  font-weight: bold;
+  font-size: 20px;
+}
