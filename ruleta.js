@@ -1,3 +1,8 @@
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('service-worker.js')
+    .then(reg => console.log("✅ Service Worker registrado"))
+    .catch(err => console.error("❌ Error al registrar SW", err));
+}
 const premiosIniciales = [
   { nombre: "Gorra", habilitado: true },
   { nombre: "Remera", habilitado: true },
