@@ -10,8 +10,7 @@ const urlsToCache = [
     "styles.css",
     "index.js",
     "manifest.json",
-    "logopk.ico",
-    "logopk.ico"
+    "logopk.png"
 ];
 
 self.addEventListener("install", event => {
