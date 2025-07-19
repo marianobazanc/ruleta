@@ -8,14 +8,14 @@
   "orientation": "portrait",
   "icons": [
     {
-      "src": "logopk.ico",
+      "src": "logopk.png",
       "sizes": "192x192",
-      "type": "image/ico"
+      "type": "image/png"
     },
     {
-      "src": "logopk.ico",
+      "src": "logopk.png",
       "sizes": "512x512",
-      "type": "image/ico"
+      "type": "image/png"
     }
   ]
 }
