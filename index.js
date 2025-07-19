@@ -12,6 +12,14 @@ let todosLosPremios = [];
 let premiosHabilitados = [];
 let sectores = [];
 
+function esperarDB(callback) {
+  if (db) {
+    callback();
+  } else {
+    setTimeout(() => esperarDB(callback), 100); // espera hasta que db esté definida
+  }
+}
+
 function initDB() {
   const request = indexedDB.open("RuletaDB", 1);
 
@@ -22,8 +30,16 @@ function initDB() {
   };
 
   request.onsuccess = function (e) {
-    db = e.target.result;
-  };
+  db = e.target.result;
+
+  esperarDB(() => {
+  cargarPremios(() => {
+    sectores = todosLosPremios.map(p => p.nombre);
+    dibujarRuleta();
+    dibujarFlecha();
+  });
+});
+};
 
   request.onerror = function () {
     alert("Error al iniciar la base de datos");
@@ -117,12 +133,15 @@ function girarRuleta(premioGanador) {
     } else {
       result.textContent = `¡Ganaste: ${premioGanador}!`;
     }
+
   }
 
   requestAnimationFrame(animar);
+
 }
 
 spinButton.onclick = () => {
+  esperarDB(() => {
   cargarPremios(() => {
     if (premiosHabilitados.length === 0) {
       result.textContent = "No hay premios habilitados.";
@@ -134,6 +153,15 @@ spinButton.onclick = () => {
     dibujarRuleta();
     girarRuleta(premioGanador.nombre);
   });
+});
+  
 };
 
 initDB();
+esperarDB(() => {
+cargarPremios(() => {
+  sectores = todosLosPremios.map(p => p.nombre);
+  dibujarRuleta();
+  dibujarFlecha(); // para mostrar la flecha también al inicio
+})
+});

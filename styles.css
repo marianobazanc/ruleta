@@ -2,10 +2,16 @@ body {
   font-family: sans-serif;
   text-align: center;
   background: #f4f4f4;
+  margin: 0;
+  height: 100vh;
 }
 
 .container {
-  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
 }
 
 canvas {
@@ -16,8 +22,10 @@ canvas {
 
 button {
   margin-top: 20px;
-  padding: 10px 20px;
-  font-size: 18px;
+  padding: 5px 20px;
+  font-size: 15px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
 }
 
 #result {
@@ -25,3 +33,37 @@ button {
   font-weight: bold;
   font-size: 20px;
 }
+
+.wheel-wrapper {
+  position: relative;
+  width: 300px;
+  height: 300px;
+}
+
+.wheel-wrapper canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.wheel-wrapper button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  padding: 25px;
+  font-size: 18px;
+  background: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  z-index: 2;
+  width: 60px;
+  height: 60px;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+

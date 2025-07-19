@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel de Administración</title>
+  <link rel="stylesheet" href="admin.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#007bff">
+</head>
+<body>
+
+  <div class="admin-container">
+      <a href="formulario.html" class="nav-link" style="text-decoration: none; color: white; background-color: black; border-radius: 10px; padding: 10px 20px;">Ir al formulario</a>
+
+    <h1>Panel de Administración</h1>
+
+    <section>
+      <h2>🎯 Premios de la Ruleta</h2>
+      <table id="tablaPremios">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>¿Habilitado?</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <div class="form-add">
+        <input type="text" id="nuevoPremio" placeholder="Nuevo premio">
+        <button id="btnAgregarPremio">Agregar</button>
+      </div>
+    </section>
+
+    <section>
+      <h2>👤 Personas registradas</h2>
+      <table id="tablaLeads">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Teléfono</th>
+            <th>Email</th>
+            <th>Interés</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>
