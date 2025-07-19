@@ -6,9 +6,9 @@ const urlsToCache = [
     "admin.html",
     "admin.css",
     "admin.js",
-    "index.html",
-    "styles.css",
-    "index.js",
+    "ruleta.html",
+    "ruleta.css",
+    "ruleta.js",
     "manifest.json",
     "logopk.png"
 ];
