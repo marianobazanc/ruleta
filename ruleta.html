@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,15 +9,154 @@
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#007bff">
 </head>
+
 <body>
+  <div class="led-borders">
+    <div class="led-strip led-top"></div>
+    <div class="led-strip led-bottom"></div>
+    <div class="led-strip-vertical led-left"></div>
+    <div class="led-strip-vertical led-right"></div>
+  </div>
+
+  <div class="rayos-luz">
+    <div class="rayo rayo-amarillo"></div>
+    <div class="rayo rayo-rosa" style="animation-delay: 1s;"></div>
+    <div class="rayo rayo-cian" style="animation-delay: 2s;"></div>
+    <div class="rayo rayo-violeta" style="animation-delay: 0.5s;"></div>
+  </div>
+
+  <div class="efecto-fondo">
+    <!-- Generarás 100 de estos con JS -->
+    <span class="particula tipo1"></span>
+    <span class="particula tipo2"></span>
+    <span class="particula tipo3"></span>
+    <span class="particula tipo4"></span>
+    <!-- ... -->
+  </div>
+
+
   <div class="container">
     <div class="wheel-wrapper">
-      <canvas id="wheel" width="300" height="300"></canvas>
-      <button id="spin">Girar</button>  
-    </div>
-    <p id="result"></p>
+      <canvas id="wheel" width="600" height="600"></canvas>
+      <button id="spin">Girar</button>
 
+      <div id="cosntainer-result js-container container-confetti " >
+        <p id="result"></p>
+      </div>
+
+    </div>
   </div>
+  <div id="explosion-container" class="explosion-container"></div>
+
+
   <script src="ruleta.js"></script>
+  <script>
+    const fondo = document.querySelector('.efecto-fondo');
+    function generarLEDs(clase, cantidad, offset = 0, vertical = false) {
+      const strip = document.querySelector(clase);
+      for (let i = 0; i < cantidad; i++) {
+        const div = document.createElement("div");
+        div.className = "led";
+        const hue = (i * 30 + offset) % 360;
+        div.style.backgroundColor = `hsl(${hue}, 100%, 50%)`;
+        div.style.animationDelay = `${i * 0.15}s`;
+        strip.appendChild(div);
+      }
+    }
+    function showExplosion() {
+      const container = document.getElementById("explosion-container");
+      container.innerHTML = "";
+
+      for (let i = 0; i < 200; i++) {
+        const particle = document.createElement("div");
+        particle.className = "explosion-particle";
+        particle.style.left = "50%";
+        particle.style.top = "50%";
+        particle.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+        particle.style.animationDelay = `${Math.random() * 0.5}s`;
+        particle.style.setProperty("--random-x", `${(Math.random() - 0.5) * 2000}px`);
+        particle.style.setProperty("--random-y", `${(Math.random() - 0.5) * 2000}px`);
+        container.appendChild(particle);
+      }
+    }
+
+
+
+
+    generarLEDs(".led-top", 50, 0);
+    generarLEDs(".led-bottom", 50, 180);
+    generarLEDs(".led-left", 30, 0, true);
+    generarLEDs(".led-right", 30, 90, true);
+    for (let i = 0; i < 100; i++) {
+      const span = document.createElement('span');
+      span.classList.add('particula', `tipo${i % 4 + 1}`);
+      span.style.left = `${Math.random() * 100}%`;
+      span.style.top = `${Math.random() * 100}%`;
+      span.style.animationDelay = `${Math.random() * 3}s`;
+      span.style.animationDuration = `${1 + Math.random() * 2}s`;
+      fondo.appendChild(span);
+    }
+
+    const confettifull = function (el) {
+      this.el = el;
+      this.containerEl = null;
+
+      this.confettiFrequency = 3;
+      this.confettiColors = ["#FCE18A", "#FF726D", "#B48DEF", "#F4306D"];
+      this.confettiAnimations = ["slow", "medium", "fast"];
+
+      this._setupElements();
+      this._renderConfetti();
+    };
+
+    confettifull.prototype._setupElements = function () {
+      const containerEl = document.createElement("div");
+      const elPosition = this.el.style.position;
+
+      if (elPosition !== "relative" || elPosition !== "absolute") {
+        this.el.style.position = "relative";
+      }
+
+      containerEl.classList.add("confetti-container");
+
+      this.el.appendChild(containerEl);
+      this.containerEl = containerEl;
+    };
+
+    confettifull.prototype._renderConfetti = function () {
+      this.confettiInterval = setInterval(() => {
+        const confettiEl = document.createElement("div");
+        const confettiSize = Math.floor(Math.random() * 3) + 7 + "px";
+        const ConfettiBackground = this.confettiColors[
+          Math.floor(Math.random() * this.confettiColors.length)
+        ];
+
+        const confettiLeft = Math.floor(Math.random() *
+          this.el.offsetWidth) + "px";
+        const confettiAnimation = this.confettiAnimations[
+          Math.floor(Math.random() * this.confettiAnimations.length)
+        ]
+
+        confettiEl.classList.add(
+          "confetti", "confetti--animation-" + confettiAnimation
+        );
+
+        confettiEl.style.left = confettiLeft;
+        confettiEl.style.width = confettiSize;
+        confettiEl.style.height = confettiSize;
+        confettiEl.style.backgroundColor = ConfettiBackground;
+
+        confettiEl.removeTimeout = setTimeout(function () {
+          confettiEl.parentNode.removeChild(confettiEl);
+        }, 3000);
+
+        this.containerEl.appendChild(confettiEl);
+      }, 25);
+    };
+
+    window.confettifull = new confettifull(document.querySelector(".js-container"));
+  </script>
+
 </body>
+
 </html>

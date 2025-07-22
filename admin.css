@@ -79,3 +79,8 @@ button.delete {
   color: white;
   margin-left: 5px;
 }
+
+
+.hidden {
+  display: none;
+}

@@ -4,7 +4,11 @@ body {
   background: #f4f4f4;
   margin: 0;
   height: 100vh;
+  background: linear-gradient(to bottom right, #4c1d95, #1e3a8a, #312e81); /* from-purple-900 via-blue-900 to-indigo-900 */
+
 }
+
+
 
 .container {
   display: flex;
@@ -15,7 +19,7 @@ body {
 }
 
 canvas {
-  border: 4px solid #333;
+  border: 4px solid white;
   border-radius: 50%;
   background-color: white;
 }
@@ -32,12 +36,61 @@ button {
   margin-top: 20px;
   font-weight: bold;
   font-size: 20px;
+  
+}
+.animar-resultado {
+  animation: resultadoin 1s linear;
+}
+
+
+@keyframes resultadoin {
+	0% {
+		animation-timing-function: ease-in;
+		opacity: 0;
+		transform: scale(0);
+	}
+
+	38% {
+		animation-timing-function: ease-out;
+		opacity: 1;
+		transform: scale(1);
+	}
+
+	55% {
+		animation-timing-function: ease-in;
+		transform: scale(0.7);
+	}
+
+	72% {
+		animation-timing-function: ease-out;
+		transform: scale(1);
+	}
+
+	81% {
+		animation-timing-function: ease-in;
+		transform: scale(0.84);
+	}
+
+	89% {
+		animation-timing-function: ease-out;
+		transform: scale(1);
+	}
+
+	95% {
+		animation-timing-function: ease-in;
+		transform: scale(0.95);
+	}
+
+	100% {
+		animation-timing-function: ease-out;
+		transform: scale(1);
+	}
 }
 
 .wheel-wrapper {
   position: relative;
-  width: 300px;
-  height: 300px;
+  width: 600px;
+  height: 600px;
 }
 
 .wheel-wrapper canvas {
@@ -48,15 +101,15 @@ button {
 
 .wheel-wrapper button {
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 46%;
+  left: 46%;
   transform: translate(-50%, -50%);
   border-radius: 50%;
   padding: 25px;
   font-size: 18px;
   background: #007bff;
   color: white;
-  border: none;
+  border: 4px solid #0056b3;
   cursor: pointer;
   z-index: 2;
   width: 60px;
@@ -67,3 +120,314 @@ button {
   align-items: center;
 }
 
+#spin{
+animation: shake 1s ease 0s infinite normal forwards;
+}
+@keyframes shake {
+	0%,
+	100% {
+		transform: rotate(0deg);
+		transform-origin: 50% 50%;
+	}
+
+	10% {
+		transform: rotate(8deg);
+	}
+
+	20%,
+	40%,
+	60% {
+		transform: rotate(-10deg);
+	}
+
+	30%,
+	50%,
+	70% {
+		transform: rotate(10deg);
+	}
+
+	80% {
+		transform: rotate(-8deg);
+	}
+
+	90% {
+		transform: rotate(8deg);
+	}
+}
+
+#container-result {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  text-align: center;
+  z-index: 5;
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  width: 500px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+
+
+
+
+
+
+
+
+.efecto-fondo {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.particula {
+  position: absolute;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  opacity: 0.6;
+}
+
+.tipo1 {
+  background-color: #facc15; /* amarillo */
+  animation: girar 3s linear infinite;
+}
+
+.tipo2 {
+  background-color: #f472b6; /* rosa */
+  animation: rebotar 2s ease-in-out infinite;
+}
+
+.tipo3 {
+  background-color: #06b6d4; /* cian */
+  animation: parpadear 2.5s ease-in-out infinite;
+}
+
+.tipo4 {
+  background-color: #c084fc; /* violeta */
+  animation: girar 2.2s linear infinite;
+}
+
+@keyframes girar {
+  0% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(180deg) scale(1.3); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+@keyframes rebotar {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+@keyframes parpadear {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+
+
+.rayos-luz {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.rayo {
+  position: absolute;
+  width: 24rem; /* 96 * 0.25rem */
+  height: 24rem;
+  background: radial-gradient(circle, var(--color) 30%, transparent 70%);
+  opacity: 0.3;
+  animation: pulso 2s ease-in-out infinite;
+}
+
+.rayo-amarillo {
+  top: 0;
+  left: 0;
+  --color: rgba(250, 204, 21, 0.3); /* from-yellow-400/30 */
+}
+
+.rayo-rosa {
+  top: 0;
+  right: 0;
+  --color: rgba(244, 114, 182, 0.3); /* from-pink-400/30 */
+}
+
+.rayo-cian {
+  bottom: 0;
+  left: 0;
+  --color: rgba(6, 182, 212, 0.3); /* from-cyan-400/30 */
+}
+
+.rayo-violeta {
+  bottom: 0;
+  right: 0;
+  --color: rgba(192, 132, 252, 0.3); /* from-purple-400/30 */
+}
+
+@keyframes pulso {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50%      { opacity: 0.6; transform: scale(1.1); }
+}
+
+.led-borders {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.led-strip {
+  display: flex;
+  position: absolute;
+  height: 10px;
+  width: 100%;
+}
+
+.led-strip-vertical {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  width: 10px;
+  height: 100%;
+}
+
+.led-top {
+  top: 0;
+  left: 0;
+}
+
+.led-bottom {
+  bottom: 0;
+  left: 0;
+}
+
+.led-left {
+  top: 0;
+  left: 0;
+}
+
+.led-right {
+  top: 0;
+  right: 0;
+}
+
+.led {
+  flex: 1;
+  height: 100%;
+  width: 100%;
+  animation: led-pulse 0.6s infinite;
+}
+
+@keyframes led-pulse {
+  0%, 100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+
+
+
+
+
+.explosion-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 40;
+}
+
+.explosion-particle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  animation: explode 1s ease-out forwards;
+}
+
+@keyframes explode {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--random-x), var(--random-y)) scale(0.5);
+  }
+}
+
+
+
+
+@keyframes confetti-slow {
+    0%{
+        transform: translate3d(0,0,0) rotateX(0) rotateY(0);
+    }
+    100%{
+        transform: translate3d(25px, 105vh, 0) rotateX(360deg) rotateY(180deg);
+    }
+}
+
+@keyframes confetti-medium {
+    0%{
+        transform: translate3d(0,0,0) rotateX(0) rotateY(0);
+    }
+    100%{
+        transform: translate3d(100px, 105vh, 0) rotateX(100deg) rotateY(360deg);
+    }
+}
+
+@keyframes confetti-fast {
+    0%{
+        transform: translate3d(0,0,0) rotateX(0) rotateY(0);
+    }
+    100%{
+        transform: translate3d(-50px, 105vh, 0) rotateX(10deg) rotateY(250deg);
+    }
+}
+
+.container-confetti {
+    width: 100vw;
+    height: 100vh;
+    background: #F0F0F0;
+}
+
+.confetti-container{
+    perspective: 700px;
+    position: absolute;
+    overflow: hidden;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.confetti{
+    position: absolute;
+    z-index: 1;
+    top: -10px;
+    border-radius: 0%;
+}
+
+.confetti--animation-slow{
+    animation: confetti-slow 2.5s linear 1 forwards;
+}
+
+.confetti--animation-medium{
+    animation: confetti-medium 1.75s linear 1 forwards;
+}
+
+.confetti--animation-fast{
+    animation: confetti-fast 1.25s linear 1 forwards;
+}

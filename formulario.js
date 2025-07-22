@@ -3,6 +3,7 @@ if ('serviceWorker' in navigator) {
     .then(reg => console.log("✅ Service Worker registrado"))
     .catch(err => console.error("❌ Error al registrar SW", err));
 }
+
 // formulario.js
 const dbRequest = indexedDB.open("LeadsDB", 1);
 let db;
@@ -10,7 +11,9 @@ let arrayLeads = [];
 
 dbRequest.onupgradeneeded = function (e) {
   db = e.target.result;
-  db.createObjectStore("leads", { keyPath: "email" });
+  if (!db.objectStoreNames.contains("leads")) {
+    db.createObjectStore("leads", { keyPath: "id", autoIncrement: true });
+  }
 };
 
 dbRequest.onsuccess = function (e) {
@@ -40,7 +43,7 @@ document.getElementById("leadForm").addEventListener("submit", function (e) {
 
   const tx = db.transaction("leads", "readwrite");
   const store = tx.objectStore("leads");
-  const req = store.put(lead);
+  const req = store.add(lead); // Usamos add para que IndexedDB cree el id automático
 
   req.onsuccess = function () {
     arrayLeads.push(lead);
@@ -48,7 +51,7 @@ document.getElementById("leadForm").addEventListener("submit", function (e) {
   };
 
   req.onerror = function () {
-    alert("Error al guardar los datos. Quizá ya participaste con este mail.");
+    alert("Error al guardar los datos.");
   };
 });
 
@@ -60,10 +63,10 @@ function cargarLeadsEnMemoria() {
     arrayLeads = req.result || [];
   };
 }
+
 function mostrarModal() {
   document.getElementById("modalRuleta").classList.remove("hidden");
 }
-
 
 function descargarCSV() {
   const encabezado = "Nombre,Apellido,Teléfono,Email,Interés\n";
