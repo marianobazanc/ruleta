@@ -6,13 +6,19 @@ canvas[style*="pointer-events: none"] {
   filter: drop-shadow(0 2px 8px rgba(0,0,0,0.12));
   transition: opacity 0.3s;
 }
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
 body {
   font-family: sans-serif;
   text-align: center;
-  background: #f4f4f4;
-  margin: 0;
-  height: 100vh;
-  background: linear-gradient(to bottom right, #4c1d95, #1e3a8a, #312e81); /* from-purple-900 via-blue-900 to-indigo-900 */
+  background: linear-gradient(to bottom right, #4c1d95, #1e3a8a, #312e81);
   position: relative;
 }
 
@@ -20,17 +26,19 @@ body {
 
 .container {
   display: flex;
-  justify-content: start;
+  justify-content: center;
   align-items: center;
-  flex-direction: column;
-  height: 100vh;
-  padding-top: 20px;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 2;
 }
 
 canvas {
   border: 4px solid white;
   border-radius: 50%;
   background-color: white;
+  box-sizing: border-box;
 }
 
 button {
@@ -98,69 +106,82 @@ button {
 
 .wheel-wrapper {
   position: relative;
-  width: 300px;
-  height: 300px;
+  width: 80vmin;
+  height: 80vmin;
+  flex: 0 0 auto;
 }
 
 .wheel-wrapper canvas {
   position: absolute;
   top: 0;
   left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .wheel-wrapper-button {
   position: absolute;
-  top: 42%;
-  left: 41%;
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
   border-radius: 50%;
-  padding: 25px;
-  font-size: 18px;
+  padding: 0;
+  font-size: clamp(16px, 2.8vmin, 36px);
   background: #007bff;
   color: white;
   border: 4px solid #0056b3;
   cursor: pointer;
   z-index: 2;
-  width: 60px;
-  height: 60px;
+  width: 22%;
+  height: 22%;
   margin: 0;
+  box-sizing: border-box;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-#spin{
-animation: shake 1s ease 0s infinite normal forwards;
+#spin {
+  animation: shake 1s ease 0s infinite;
 }
+
+#spin.animacion-lenta {
+  animation-duration: 2.6s;
+}
+
+#spin.sin-animacion {
+  animation: none;
+}
+
 @keyframes shake {
 	0%,
 	100% {
-		transform: rotate(0deg);
+		transform: translate(-50%, -50%) rotate(0deg);
 		transform-origin: 50% 50%;
 	}
 
 	10% {
-		transform: rotate(8deg);
+		transform: translate(-50%, -50%) rotate(8deg);
 	}
 
 	20%,
 	40%,
 	60% {
-		transform: rotate(-10deg);
+		transform: translate(-50%, -50%) rotate(-10deg);
 	}
 
 	30%,
 	50%,
 	70% {
-		transform: rotate(10deg);
+		transform: translate(-50%, -50%) rotate(10deg);
 	}
 
 	80% {
-		transform: rotate(-8deg);
+		transform: translate(-50%, -50%) rotate(-8deg);
 	}
 
 	90% {
-		transform: rotate(8deg);
+		transform: translate(-50%, -50%) rotate(8deg);
 	}
 }
 
@@ -245,6 +266,7 @@ animation: shake 1s ease 0s infinite normal forwards;
 .rayos-luz {
   position: absolute;
   inset: 0;
+  overflow: hidden;
   pointer-events: none;
   z-index: 1;
 }
@@ -288,8 +310,9 @@ animation: shake 1s ease 0s infinite normal forwards;
 }
 
 .led-borders {
-  position: absolute;
+  position: fixed;
   inset: 0;
+  overflow: hidden;
   pointer-events: none;
   z-index: 10;
 }
@@ -299,6 +322,7 @@ animation: shake 1s ease 0s infinite normal forwards;
   position: absolute;
   height: 10px;
   width: 100%;
+  overflow: hidden;
 }
 
 .led-strip-vertical {
@@ -307,6 +331,7 @@ animation: shake 1s ease 0s infinite normal forwards;
   position: absolute;
   width: 10px;
   height: 100%;
+  overflow: hidden;
 }
 
 .led-top {
@@ -330,10 +355,18 @@ animation: shake 1s ease 0s infinite normal forwards;
 }
 
 .led {
-  flex: 1;
-  height: 100%;
-  width: 100%;
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 0;
   animation: led-pulse 0.6s infinite;
+}
+
+.led-strip .led {
+  height: 100%;
+}
+
+.led-strip-vertical .led {
+  width: 100%;
 }
 
 @keyframes led-pulse {
@@ -353,6 +386,7 @@ animation: shake 1s ease 0s infinite normal forwards;
 .explosion-container {
   position: fixed;
   inset: 0;
+  overflow: hidden;
   pointer-events: none;
   z-index: 40;
 }
@@ -413,8 +447,12 @@ animation: shake 1s ease 0s infinite normal forwards;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(0.7);
+  width: max-content;
+  max-width: 90vw;
   min-width: 340px;
-  min-height: 260px;
+  min-height: 220px;
+  padding: 36px 32px 28px;
+  box-sizing: border-box;
   background: linear-gradient(135deg, #FFD700 60%, #FF4500 100%);
   color: #fff;
   border-radius: 30px;
@@ -464,12 +502,16 @@ animation: shake 1s ease 0s infinite normal forwards;
 }
 .resultado-letra {
   display: inline-block;
+  white-space: pre;
   opacity: 0;
   transform: scale(0.5) rotate(-20deg);
   animation: letraCasino 0.7s forwards;
 }
 #resultadoTexto{
-  padding: 0 40px;
+  padding: 0 8px;
+  text-align: center;
+  line-height: 1.15;
+  max-width: 100%;
 }
 @keyframes letraCasino {
   0% { opacity: 0; transform: scale(0.5) rotate(-20deg);}
