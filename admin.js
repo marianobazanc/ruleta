@@ -14,7 +14,7 @@ const req1 = indexedDB.open("RuletaDB", 2);
 req1.onupgradeneeded = e => {
   ruletaDB = e.target.result;
   if (!ruletaDB.objectStoreNames.contains("premios")) {
-    ruletaDB.createObjectStore("premios", { keyPath: "id", autoIncrement: true });
+    ruletaDB.createObjectStore("premios", { keyPath: "id" });
   }
 };
 req1.onsuccess = e => {
@@ -129,7 +129,9 @@ document.getElementById("btnAgregarPremio").onclick = () => {
   getAllReq.onsuccess = () => {
     const existing = getAllReq.result;
     const maxPosition = existing.reduce((max, p) => Math.max(max, p.position ?? 0), 0);
+    const maxId = existing.reduce((max, p) => Math.max(max, Number(p.id) || 0), 0);
     const nuevoPremio = {
+      id: maxId + 1,
       nombre: nuevo,
       habilitado: true,
       position: maxPosition + 1
