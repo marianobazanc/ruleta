@@ -1,4 +1,4 @@
-const CACHE_NAME = "ruleta-cache-v1";
+const CACHE_NAME = "ruleta-cache-v2";
 const urlsToCache = [
     "formulario.html",
     "formulario.css",
@@ -10,7 +10,9 @@ const urlsToCache = [
     "ruleta.css",
     "ruleta.js",
     "manifest.json",
-    "logopk.png"
+    "logopk.png",
+    "logouktransparente.png",
+    "confetti.browser.min.js"
 ];
 
 self.addEventListener("install", event => {
@@ -18,6 +20,14 @@ self.addEventListener("install", event => {
         caches.open(CACHE_NAME).then(cache => {
             return cache.addAll(urlsToCache);
         })
+    );
+});
+
+self.addEventListener("activate", event => {
+    event.waitUntil(
+        caches.keys().then(keys =>
+            Promise.all(keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key)))
+        )
     );
 });
 

@@ -13,7 +13,7 @@ let sectores = [];
 
 const canvas = document.getElementById("wheel");
 const ctx = canvas.getContext("2d");
-const CANVAS_SIZE = 600;
+const CANVAS_SIZE = 300;
 const RADIO = CANVAS_SIZE / 2;
 canvas.width = CANVAS_SIZE;
 canvas.height = CANVAS_SIZE;
@@ -87,7 +87,7 @@ ctx.lineWidth = 2;
 ctx.strokeStyle = "white";
 ctx.stroke();
     ctx.fillStyle = "black";
-    ctx.font = "16px sans-serif";
+    ctx.font = "11px sans-serif";
     ctx.save();
     ctx.translate(RADIO, RADIO);
     ctx.rotate(angle + step / 2);
@@ -112,7 +112,7 @@ function girarRuleta(premioGanador) {
   const anguloObjetivo = 360 * 5 + (270 - (idx * gradosPorSector) - gradosPorSector / 2);
 
   let inicio = null;
-  let duracion = 4000;
+  let duracion = 5000;
 
   function animar(ts) {
     if (!inicio) inicio = ts;
@@ -133,10 +133,8 @@ function girarRuleta(premioGanador) {
     if (progreso < 1) {
       requestAnimationFrame(animar);
     } else {
-      result.textContent = `¡Ganaste: ${premioGanador}!`;
-      result.classList.remove("animar-resultado");
-      void result.offsetWidth;
-      result.classList.add("animar-resultado");
+      // Mostrar resultado con animación casino y confeti
+      mostrarResultadoCasino(`¡Ganaste: ${premioGanador}!`);
       setTimeout(() => {
         document.getElementById("explosion-container").innerHTML = "";
       }, 1500);
@@ -168,3 +166,5 @@ spinButton.onclick = () => {
 };
 
 initDB();
+
+

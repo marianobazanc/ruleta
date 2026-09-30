@@ -47,13 +47,22 @@ document.getElementById("leadForm").addEventListener("submit", function (e) {
 
   req.onsuccess = function () {
     arrayLeads.push(lead);
-    mostrarModal();
+    mostrarNotificacion();
+    document.getElementById("leadForm").reset();
   };
 
   req.onerror = function () {
     alert("Error al guardar los datos.");
   };
 });
+
+function mostrarNotificacion() {
+  const notif = document.getElementById('notificacion');
+  notif.style.display = 'block';
+  setTimeout(() => {
+    notif.style.display = 'none';
+  }, 2500);
+}
 
 function cargarLeadsEnMemoria() {
   const tx = db.transaction("leads", "readonly");
@@ -62,10 +71,6 @@ function cargarLeadsEnMemoria() {
   req.onsuccess = () => {
     arrayLeads = req.result || [];
   };
-}
-
-function mostrarModal() {
-  document.getElementById("modalRuleta").classList.remove("hidden");
 }
 
 function descargarCSV() {
